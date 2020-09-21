@@ -5,10 +5,16 @@
 
 body{
     font-family: 'Montserrat', sans-serif;
+    width: 100vw;
+}
+
+.navbar-nav li{
+    margin-left: 40px;
 }
 
 .navbar-expand-lg{
-    background-color:#faf6fe;
+    background-color:#fef6fb;
+
 }
 
 .alinhamento-inicio-nav{
@@ -34,8 +40,29 @@ body{
     padding: 0;
 }
 
-#mainSlider .carousel-inner, #mainSlider .carousel-item{
-    height: 90vh;
+#mainSlider {
+    height: 80vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    flex:1 ;
+    align-items: center;
+    justify-content: space-between;
+}
+#mainSlider a {
+    background-color: #301c28;
+}
+
+.carousel-inner{
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+}
+
+.carousel-caption{
+    background-color: rgba(138, 110, 110, 0.5);
 }
 
 #mainSlider .carousel-caption h2{
@@ -51,9 +78,9 @@ body{
     color: black;
 }
 
-.botao-principal{
+.botao-principal {
     background-color: transparent;
-    color: black;
+    color: rgb(196, 189, 189);
     text-transform: uppercase;
     width: 200px;
     height: 60px;
@@ -65,11 +92,18 @@ body{
 
 .botao-principal:hover{
     text-decoration: none;
-    color: black;
+    color: white;
     background-color: teal;
     border-color: teal;
 }
 
 .carousel-indicators .active{
     background-color: teal;
+}
+
+.projeto, .contato, .rodape{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
