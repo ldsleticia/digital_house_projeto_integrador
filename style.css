@@ -1,75 +1,183 @@
-*{
-    margin: 0px;
-    padding: 0px;
-}
-
 body{
     font-family: 'Montserrat', sans-serif;
+    background-color: #E5E5E5;
+}
+li {
+    list-style: none;
+
 }
 
 .navbar-expand-lg{
-    background-color:#faf6fe;
+    background-color:#0466C8;
+    ;
 }
 
-.alinhamento-inicio-nav{
-    font-weight: bolder;
+nav .navbar-brand img {
+    width: 50px;
 }
 
-.alinhamento-portifolio-nav{
-    text-align: right;
-    margin-left: 940px;
-    font-weight: bolder;
+nav a.navbar-brand {
+    padding: 0;
+    display: flex;
+    align-items: flex-end;
 }
 
-.alinhamento-sobre-nav{
-    font-weight: bolder;
+.navbar-dark .navbar-toggler {
+    border: solid 1px #fff;
+    height: 50px;
 }
 
-.alinhamento-contato-nav{
-    font-weight: bolder;
+.carousel, .carousel-inner, .carousel-item img{
+    height: 400px;
+    /* overflow: hidden; */
+    object-fit: cover;
+}
+.carousel {
+    display: none;
 }
 
-/* carrosel */
-.container-fluid{
+.carousel-caption .btn-pesquisar {
+    background-color: #023E7D;
+    color: #fff;
+    font-size: x-large;
+    width: 200px;
+    border: solid 1px #fff;
+    border-radius: 2rem;
+}
+
+.carousel-caption .btn-pesquisar a:focus {
+
+    border-radius: 2rem;
+}
+
+.carousel-caption .btn-pesquisar:hover {
+    background-color: #1860ad;
+
+}
+
+
+.pesquisar {
+    border-bottom-right-radius: 3rem;
+    border-bottom-left-radius: 3rem;
+    color: #33415c;
+    background-color: #9bacbb;
+    width:100% ;
+}
+.pesquisar h2 {
+padding: 85px 0 15px 0;
+}
+.pesquisar button {
+    background: #023E7D;
+    color: #fff;
+    border: solid 2px #fff;
+}
+
+.pesquisar button:hover {
+    background-color:  #1860ad;
+}
+
+
+.form-control {
+    width: 60%;
+    border-radius: 2rem;
+    margin-bottom: 15px;
+}
+
+.container-vagas h3 {
+    margin: 20px 0;
+    text-align: center;
+    color: #33415C;
+}
+
+.card-vaga {
+    padding: 5px 20px;
+    border-radius: 1rem;
+    border: 2px solid #979DAC
+}
+
+.col {
     padding: 0;
 }
 
-#mainSlider .carousel-inner, #mainSlider .carousel-item{
-    height: 90vh;
+.card-vaga li:nth-child(2) {
+    border-left: solid 1px #9bacbb;
+    border-right: solid 1px #9bacbb;
+
 }
 
-#mainSlider .carousel-caption h2{
-    font-size: 50px;
-    margin-bottom: 30px;
-    color: black;
+.card-vaga li {
+    padding: 0 10px;
 }
 
-#mainSlider .carousel-caption p{
-    font-size: 22px;
-    font-weight: 300;
-    margin-bottom: 10px;
-    color: black;
-}
-
-.botao-principal{
-    background-color: transparent;
-    color: black;
-    text-transform: uppercase;
-    width: 200px;
+.card-vaga .card-botton a {
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
     height: 60px;
-    padding: 10px 20px;
-    border-radius: 30px;
-    border: 3px solid transparent;
-    transition: .5s;
+    background-color: #C4C4C4;
+    border-radius: 50%;
+    color: #33415c;
 }
 
-.botao-principal:hover{
-    text-decoration: none;
-    color: black;
-    background-color: teal;
-    border-color: teal;
+.card-vaga h4 {
+    color: #33415c;
+    font-size: 1.3rem;
 }
 
-.carousel-indicators .active{
-    background-color: teal;
+.card-vaga p {
+    margin: 0;
+}
+
+
+img.card-img-top {
+    display: none;
+}
+.card-botton {
+    justify-content: space-between;
+    align-items: center;
+}
+footer {
+    background-color: #33415c;
+    color: #fff;
+    /* padding: 10px 30px; */
+}
+
+footer img {
+    margin-top: 30px;
+    width: 100px;
+    height: 100px;
+
+}
+footer .projeto-integrador {
+    margin-top: 20px;
+
+}
+
+ul {
+    padding: 0;
+}
+
+@media (min-width: 768px) {
+    .carousel {
+      display: block;
+    }
+
+    .form-control {
+        width: 100%;
+    }
+
+    .pesquisar h2 {
+        padding: 25px 0 15px 0;
+        
+    }
+    .col {
+        padding: 0 20px;
+    }
+    img.card-img-top {
+
+        display: block;
+    }
+
 }
