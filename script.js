@@ -8,17 +8,8 @@ $("#form-pesquisa").submit(function( event ) {
   const level = document.getElementById("senioridade").value;
   const remote = document.getElementById("remoto").checked;
 
-  $.ajax({
-    type: "POST",
+  $.get({
     url: "https://devjobs-dh.herokuapp.com/jobs/",
-    data: {
-      "uf": !!uf ? uf : null,
-      "style": !!style ? style : null,
-      "level": !!level ? level : null,
-      "remote": remote
-    },
-    dataType: "json",
-    contentType: 'application/json',
     success: function(result){
 
     const html = result.map(vaga => (
