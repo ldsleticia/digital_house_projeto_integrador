@@ -14,19 +14,19 @@ $("#form-pesquisa").submit(function( event ) {
     parameters = '?labels=';
 
     if (uf.selectedIndex > 1){
-      console.log('uf');
-      console.log(uf.selectedIndex);
       parameters += uf.value + ',';
     }
 
     if (style.selectedIndex > 1){
-      console.log('style');
       parameters += style.value + ',';
     }
 
     if (level.selectedIndex > 1){
-      console.log('level');
       parameters += level.value + ',';
+    }
+
+    if (remote){
+      parameters += 'Remoto,';
     }
 
     parameters = parameters.slice(0, -1);
@@ -36,8 +36,6 @@ $("#form-pesquisa").submit(function( event ) {
   remote= remote ? 'remoto' : ''
 
   const url = "https://api.github.com/repos/frontendbr/vagas/issues" + parameters;
-
-  console.log(url);
 
   $.get({
     url: url,
@@ -56,18 +54,18 @@ $("#form-pesquisa").submit(function( event ) {
         <div class="card h-100 card-vaga">
           <div class="card-top d-flex justify-content-between">
             <h4 class="mt-4">${vaga.title}</h4>
-            <h4 class="mt-4">PJ</h4>
+            <h4 class="mt-4">${style.selectedIndex > 1 ? style.value : 'A Combinar'}</h4>
           </div>
           <ul class="d-flex flex-wrap px-0">
-            <li>Digital House</li>
-            <li>São Paulo</li>
-            <li>${vaga.created_at}</li>
+            <li>${vaga.user.login}</li>
+            <li>${uf.selectedIndex > 1 ? uf.value : "Remoto"}</li>
+            <li>${vaga.created_at.substring(0,10)}</li>
           </ul>
           <div class="card-botton d-flex">
             <div class="dados-vaga">
-              <p>Requisitos: </p>
-              <p>Carga horária: </p>
-              <p>Salário: </p>
+              <p>Requisitos: ${level.selectedIndex > 1 ? level.selectedIndex : '2'} anos de experiência</p>
+              <p>Carga horária: 8:00 às 17:00</p>
+              <p>Salário: A Combinar</p>
             </div>
 
             <a id="saiba-mais" href="${vaga.html_url}" target="_blank">+</a>
