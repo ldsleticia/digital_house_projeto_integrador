@@ -1,6 +1,163 @@
+// *** Variáveis ***
+let pagina = 1;
+let local = '';
+let tipo = '';
+let remoto = false;
+let senioridade = '';
 
+// *** Funções que rodarão no início da página ***
+(function (){
+  'use strict';
+
+  let lugares = localStorage.getItem('lugares');
+  let tipos = localStorage.getItem('tipos');
+
+  $('#cb-estado').attr("disabled", true);
+  $('#tipo-contrato').attr("disabled", true);
+
+  // *** SET LOCALIZAÇÕES ***
+  if (!lugares){
+    $.get({
+      url: 'https://devjobs-dh.herokuapp.com/vagas/filtros/locais',
+      success: function(result){
+    
+        lugares = result.map(local => (
+          `<option value="${local}">${local}</option>`
+        ));
+          
+        localStorage.setItem('lugares',lugares);
+        $('#cb-estado').append(lugares);
+        
+        $('#cb-estado').attr("disabled", false);
+    }});
+  } else
+  {
+    $('#cb-estado').append(lugares);
+    
+    $('#cb-estado').attr("disabled", false);
+  }
+
+  // *** SET TIPOS DE CONTRATAÇÃO ***
+  if (!tipos){
+    $.get({
+      url: 'https://devjobs-dh.herokuapp.com/vagas/filtros/tipos',
+      success: function(result){
+    
+        tipos = result.map(tipo => (
+          `<option value="${tipo}">${tipo}</option>`
+        ));
+          
+        localStorage.setItem('tipos',tipos);
+        $('#tipo-contrato').append(tipos);
+        
+        $('#tipo-contrato').attr("disabled", false);
+    }});
+  } else
+  {
+    $('#tipo-contrato').append(tipos);
+    
+    $('#tipo-contrato').attr("disabled", false);
+  }
+  
+}());
+
+// *** Método responsável por realizar a pesquisa e incluir os cards ***
+const realizarPesquisa = () => {
+  $('body').addClass('wait');
+  const url = "https://devjobs-dh.herokuapp.com/vagas/filter?page=" + pagina;
+  let parameters = '';
+
+  if (local){
+    parameters += '&local=' + local;
+  }
+
+  if (tipo){
+    parameters += '&tipo=' + tipo;
+  }
+
+  if (senioridade){
+    parameters += '&senioridade=' + senioridade;
+  }
+
+  if (remoto){
+    parameters += '&remoto=true';
+  }
+
+  console.log(url + parameters);
+
+  $.get({
+    url: url + parameters,
+    success: function(result){
+
+    $("#container-list-vagas").empty();
+
+    if (result.vagas.length === 0 && pagina === 1) {
+      $("#container-list-vagas").append('<h3>Não há resultados</h3>');
+    }
+
+    const vagas = result.vagas.map(vaga => (
+      `<div class="col mb-4">
+        <div class="card h-100 card-vaga">
+        <img src="${vaga.url_logo}" class="card-img-top" alt="logo da empresa ${vaga.empresa}">
+          <div class="card-top d-flex justify-content-between">
+            <h4 class="mt-4">${vaga.titulo}</h4>
+          </div>
+          <ul class="d-flex flex-wrap px-0">
+            <li>${vaga.empresa}</li>
+            <li>${vaga.localizacao.join(', ')}</li>
+            <li>${vaga.data.substring(0,10)}</li>
+          </ul>
+          <div class="card-botton d-flex">
+            <div class="dados-vaga">
+              <p>Tipo Contrato: ${vaga.tipo_contratacao}</p>
+            </div>
+
+            <a id="saiba-mais" href="${vaga.url_vaga}" target="_blank">+</a>
+          </div>
+        </div>
+      </div>
+      `
+    ));
+
+    $("#container-list-vagas").append(vagas);
+
+    $('#btn-pesquisa').attr("disabled", false);
+    $('body').removeClass('wait');
+    enableNextPrev(result.count);
+
+  }});
+}
+
+
+// *** Habilitar e Desabilitar o Next Prev
+const enableNextPrev = (count) => {
+  if (pagina * 10 < count){
+    console.log("habilitar next");
+  }
+
+  if (pagina > 1 && count > 10) {
+    console.log("habilitar prev");
+  }
+}
+
+
+// *** Avançar página ***
+const nextPage = () => {
+  pagina++;
+  realizarPesquisa();
+}
+
+// *** Voltar página ***
+const prevPage = () => {
+  pagina--;
+  realizarPesquisa();
+}
+
+// *** Submit, irá preencher os valores das variáveis e rodar a pesquisa
 $("#form-pesquisa").submit(function( event ) {
  
+  $('#btn-pesquisa').attr("disabled", true);
+
   event.preventDefault();
 
   let uf = document.getElementById("cb-estado");
@@ -8,75 +165,28 @@ $("#form-pesquisa").submit(function( event ) {
   let level = document.getElementById("senioridade");
   let remote = document.getElementById("remoto").checked;
   
-  let parameters = '';
+  // Zerar as variáveis
+  pagina = 1;
+  local = '';
+  tipo = '';
+  remoto = false;
+  senioridade = '';
 
-  if(uf.selectedIndex > 1 || style.selectedIndex > 1 || level.selectedIndex > 1){
-    parameters = '?labels=';
-
-    if (uf.selectedIndex > 1){
-      parameters += uf.value + ',';
-    }
-
-    if (style.selectedIndex > 1){
-      parameters += style.value + ',';
-    }
-
-    if (level.selectedIndex > 1){
-      parameters += level.value + ',';
-    }
-
-    if (remote){
-      parameters += 'Remoto,';
-    }
-
-    parameters = parameters.slice(0, -1);
-
+  if (uf.selectedIndex > 1){
+    local = uf.value;
   }
 
-  remote= remote ? 'remoto' : ''
+  if (style.selectedIndex > 1){
+    tipo = style.value;
+  }
 
-  const url = "https://api.github.com/repos/frontendbr/vagas/issues" + parameters;
+  if (level.selectedIndex > 1){
+    senioridade = level.value;
+  }
 
-  $.get({
-    url: url,
-    success: function(result){
+  if (remote){
+    remoto = true;
+  }
 
-    $("#container-list-vagas").empty();
-
-
-    if (result.length === 0) {
-      $("#container-list-vagas").append('<h3>Não há resultados</h3>');
-    }
-
-
-    const html = result.map(vaga => (
-      `<div class="col mb-1">
-        <div class="card h-100 card-vaga">
-          <div class="card-top d-flex justify-content-between">
-            <h4 class="mt-4">${vaga.title}</h4>
-            <h4 class="mt-4">${style.selectedIndex > 1 ? style.value : 'A Combinar'}</h4>
-          </div>
-          <ul class="d-flex flex-wrap px-0">
-            <li>${vaga.user.login}</li>
-            <li>${uf.selectedIndex > 1 ? uf.value : "Remoto"}</li>
-            <li>${vaga.created_at.substring(0,10)}</li>
-          </ul>
-          <div class="card-botton d-flex">
-            <div class="dados-vaga">
-              <p>Requisitos: ${level.selectedIndex > 1 ? level.selectedIndex : '2'} anos de experiência</p>
-              <p>Carga horária: 8:00 às 17:00</p>
-              <p>Salário: A Combinar</p>
-            </div>
-
-            <a id="saiba-mais" href="${vaga.html_url}" target="_blank">+</a>
-          </div>
-        </div>
-      </div>
-      `
-    ));
-
-    $("#container-list-vagas").append(html);
-
-  }});
-
+  realizarPesquisa();
 });
