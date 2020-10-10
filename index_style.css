@@ -143,6 +143,14 @@ padding: 85px 0 15px 0;
     margin-top: 5px;
 }
 
+#next, #prev {
+    cursor: pointer;
+}
+
+.next span{
+    vertical-align: middle;
+}
+
 .card-vaga .card-botton a {
     font-size: 40px;
     display: flex;
@@ -156,7 +164,6 @@ padding: 85px 0 15px 0;
     transition: 0.2s;
 
 }
-
 .card-vaga .card-botton a:hover {
     text-decoration: none;
     background-color: #33415c;
@@ -276,6 +283,12 @@ ul {
         margin-top: 12px;
         width: 100px;
         margin-left: 15%;
+    }
+
+    .logo {
+        width: 100%;
+        height: 150px;
+        padding: auto 0;
     }
 }
 
