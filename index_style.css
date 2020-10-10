@@ -241,6 +241,11 @@ ul {
     text-decoration:underline;
 }
 
+body.wait *, body.wait
+{
+    cursor: progress !important;
+}
+
 @media (min-width: 768px) {
     .carousel {
       display: block;
