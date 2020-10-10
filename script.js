@@ -132,26 +132,31 @@ const realizarPesquisa = () => {
 // *** Habilitar e Desabilitar o Next Prev
 const enableNextPrev = (count) => {
   if (pagina * 10 < count){
-    console.log("habilitar next");
+    $('#next').attr("hidden", false);
+  } else {
+    $('#next').attr("hidden", true);
   }
 
   if (pagina > 1 && count > 10) {
-    console.log("habilitar prev");
+    $('#prev').attr("hidden", false);
+  } else {
+    $('#prev').attr("hidden", true);
   }
 }
 
 
 // *** Avançar página ***
-const nextPage = () => {
+$('#next').click(() => {
   pagina++;
   realizarPesquisa();
-}
+});
+
 
 // *** Voltar página ***
-const prevPage = () => {
+$('#prev').click(() => {
   pagina--;
   realizarPesquisa();
-}
+});
 
 // *** Submit, irá preencher os valores das variáveis e rodar a pesquisa
 $("#form-pesquisa").submit(function( event ) {
