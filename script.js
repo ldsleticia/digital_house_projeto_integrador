@@ -98,7 +98,9 @@ const realizarPesquisa = () => {
     const vagas = result.vagas.map(vaga => (
       `<div class="col mb-4">
         <div class="card h-100 card-vaga">
-        <img src="${vaga.url_logo}" class="card-img-top" alt="logo da empresa ${vaga.empresa}">
+        <div class="logo">
+          <img src="${vaga.url_logo}" class="card-img-top" alt="logo da empresa ${vaga.empresa}">
+        </div>
           <div class="card-top d-flex justify-content-between">
             <h4 class="mt-4">${vaga.titulo}</h4>
           </div>
