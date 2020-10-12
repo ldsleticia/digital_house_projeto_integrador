@@ -246,6 +246,11 @@ body.wait *, body.wait
     cursor: progress !important;
 }
 
+#container-list-vagas{
+    display: flex;
+    justify-content: center;
+}
+
 @media (min-width: 768px) {
     .carousel {
       display: block;
